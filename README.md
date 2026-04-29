@@ -1,13 +1,12 @@
 # FPP Dashboard
 
-Monthly management accounts and shareholder dashboard for Five Peaks Properties.
+Live management accounts and shareholder dashboard for Five Peaks Properties.
 
-Each month is published under its own folder: `YYYY-MM/`.
+- `index.html` &mdash; Shareholder Dashboard (default landing page)
+- `management-accounts.html` &mdash; Detailed Management Accounts
+- `compliance.html` &mdash; Compliance Snapshot
 
-- `index.html` &mdash; Shareholder dashboard (default landing page)
-- `management-accounts.html` &mdash; Detailed management accounts
-- `compliance.html` &mdash; Compliance snapshot
-
-The root `index.html` redirects to the latest month.
+Each month overwrites these three files.
+Prior months are preserved via git tags (e.g., `v2026-04`).
 
 > Private working repo. All pages set to `noindex, nofollow`.
