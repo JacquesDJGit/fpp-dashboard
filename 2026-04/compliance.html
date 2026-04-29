@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FPP Compliance - APRIL 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #FFFFFF; color: #2D3748; min-height: 100vh; }
+  .header-bar { background: linear-gradient(to right, #435663 0%, #435663 100%); padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }
+  .header-bar h1 { color: #FFFFFF; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; }
+  .header-bar .subtitle { color: rgba(255,255,255,0.7); font-size: 12px; margin-top: 2px; }
+  .header-right { text-align: right; }
+  .header-right .period { color: #C9A84C; font-size: 14px; font-weight: 600; }
+  .header-right .date { color: rgba(255,255,255,0.6); font-size: 11px; margin-top: 2px; }
+
+  .tab-nav { background: #FFFFFF; border-bottom: 2px solid #E2E8F0; display: flex; padding: 0 32px; }
+  .tab-btn { padding: 14px 24px; font-size: 13px; font-weight: 600; color: #718096; cursor: pointer; border: none; background: none; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
+  .tab-btn:hover { color: #435663; }
+  .tab-btn.active { color: #435663; border-bottom-color: #C9A84C; }
+  .content { padding: 24px 32px 60px; max-width: 1200px; margin: 0 auto; }
+  .tab-page { display: none; }
+  .tab-page.active { display: block; }
+  .card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 10px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .card-header { background: #F8F9FA; padding: 14px 20px; border-bottom: 1px solid #E2E8F0; display: flex; align-items: center; gap: 10px; }
+  .card-header h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #435663; }
+  .card-body { padding: 16px 20px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  thead th { text-align: left; padding: 8px 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #718096; border-bottom: 1px solid #E2E8F0; white-space: nowrap; }
+  thead th.num { text-align: right; }
+  tbody td { padding: 7px 12px; border-bottom: 1px solid #F0F0F0; color: #4A5568; white-space: nowrap; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody td.ytd { font-weight: 700; color: #435663; }
+  tbody td.label { color: #2D3748; }
+  tbody tr.section-header td { font-weight: 700; color: #435663; padding-top: 14px; border-bottom: 2px solid #C9A84C; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  tbody tr.subtotal td { font-weight: 700; color: #2D3748; border-top: 1px solid #CBD5E0; border-bottom: 2px solid #CBD5E0; }
+  tbody tr.total-row td { font-weight: 800; color: #435663; border-top: 2px solid #435663; border-bottom: 2px solid #435663; font-size: 13px; }
+  tbody tr:hover { background: #FAFBFC; }
+  tbody tr.indent td.label { padding-left: 28px; }
+  .info-icon { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; background: #E2E8F0; color: #718096; font-size: 10px; font-weight: 700; font-style: italic; cursor: help; margin-left: 6px; vertical-align: middle; flex-shrink: 0; }
+  .info-icon:hover { background: #C9A84C; color: #FFFFFF; }
+  .tooltip-wrap { position: fixed; max-width: 300px; background: #435663; color: #FFFFFF; font-size: 12px; line-height: 1.5; padding: 10px 14px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 9999; pointer-events: none; display: none; font-weight: 400; font-style: normal; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 20px; }
+  .kpi-tile { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 10px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .kpi-tile .kpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: #718096; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+  .kpi-tile .kpi-value { font-size: 22px; font-weight: 800; color: #435663; margin-top: 6px; }
+  .kpi-tile .kpi-sub { font-size: 11px; color: #4A5568; margin-top: 2px; }
+  .kpi-positive { color: #38A169 !important; }
+  .kpi-negative { color: #E53E3E !important; }
+  .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  .chart-card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .chart-card.full { grid-column: 1 / -1; }
+  .chart-title { font-size: 13px; font-weight: 700; color: #435663; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+  canvas { max-height: 280px; }
+  .filter-bar { display: flex; gap: 8px; margin-bottom: 18px; align-items: center; }
+  .filter-bar label { font-size: 11px; font-weight: 600; color: #718096; text-transform: uppercase; letter-spacing: 0.5px; }
+  .filter-bar select { padding: 6px 12px; border: 1px solid #CBD5E0; border-radius: 6px; font-size: 12px; color: #2D3748; background: #FFFFFF; cursor: pointer; }
+  .comp-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .comp-tile { padding: 14px 16px; border-radius: 10px; text-align: center; border: 1px solid #E2E8F0; }
+  .comp-tile .comp-count { font-size: 28px; font-weight: 800; }
+  .comp-tile .comp-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; margin-top: 4px; }
+  .comp-complete { background: #F0FFF4; } .comp-complete .comp-count { color: #38A169; } .comp-complete .comp-label { color: #2F855A; }
+  .comp-pending { background: #FFFFF0; } .comp-pending .comp-count { color: #D69E2E; } .comp-pending .comp-label { color: #B7791F; }
+  .comp-overdue { background: #FFF5F5; } .comp-overdue .comp-count { color: #E53E3E; } .comp-overdue .comp-label { color: #C53030; }
+  .comp-upcoming { background: #F0F4F7; } .comp-upcoming .comp-count { color: #435663; } .comp-upcoming .comp-label { color: #2C3A44; }
+  .status-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+  .st-complete { background: #C6F6D5; color: #22543D; } .st-pending { background: #FEFCBF; color: #744210; }
+  .st-overdue { background: #FED7D7; color: #742A2A; border: 1px solid #FC8181; } .st-upcoming { background: #D7DDE3; color: #2C3A44; }
+  .st-na { background: #EDF2F7; color: #718096; }
+  .auth-badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+  .auth-sars { background: #F5E9C4; color: #7A6318; } .auth-cipc { background: #D7DDE3; color: #2C3A44; }
+  .auth-sha { background: #EDF2F7; color: #4A5568; } .auth-popia { background: #FEFCBF; color: #744210; }
+  .risk-card { background: #FFF5F5; border: 1px solid #FED7D7; border-left: 4px solid #FC8181; border-radius: 8px; padding: 14px 18px; margin-bottom: 10px; }
+  .risk-card .risk-title { font-size: 13px; font-weight: 700; color: #C53030; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .risk-card .risk-desc { font-size: 12px; color: #4A5568; line-height: 1.6; }
+  .na-box { background: #F8F9FA; border: 1px solid #E2E8F0; border-radius: 8px; padding: 14px 18px; }
+  .na-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: #EDF2F7; color: #718096; margin-bottom: 8px; }
+  .na-box p { font-size: 12.5px; color: #4A5568; line-height: 1.6; }
+  .snapshot-stamp { font-size: 11px; color: #718096; margin-bottom: 16px; font-style: italic; }
+  .footer { text-align: center; padding: 20px 32px; font-size: 11px; color: #718096; border-top: 1px solid #E2E8F0; }
+  @media (max-width: 768px) { .chart-row { grid-template-columns: 1fr; 
+    .kpi-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+    .kpi-tile { padding: 12px !important; }
+    .kpi-value { font-size: 18px !important; }
+    .kpi-label { font-size: 11px !important; }
+    .print-btn { top: 8px; right: 8px; padding: 6px 10px; font-size: 11px; } } .content { padding: 16px; } .header-bar { padding: 16px; } .tab-nav { padding: 0 16px; overflow-x: auto; } .tab-btn { padding: 12px 16px; font-size: 12px; } }
+
+  .tab-nav a.tab-btn { text-decoration: none; }
+
+  /* Print button */
+  .print-btn { position: fixed; top: 16px; right: 16px; z-index: 1000; background: #435663; color: #fff; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+  .print-btn:hover { background: #2C3A44; }
+
+  /* Print-specific styles */
+  @media print {
+    @page { size: A4 landscape; margin: 10mm; }
+    body { background: #fff !important; }
+    .print-btn, .tab-nav, .toggle-bar, .filter-bar, #tooltip { display: none !important; }
+    .header-bar { page-break-after: avoid; box-shadow: none !important; }
+    .content { padding: 0 !important; }
+    .kpi-grid { page-break-inside: avoid; grid-template-columns: repeat(5, 1fr) !important; gap: 8px !important; }
+    .kpi-tile { box-shadow: none !important; border: 1px solid #E2E8F0; padding: 8px !important; }
+    .kpi-value { font-size: 16px !important; }
+    .kpi-label { font-size: 10px !important; }
+    .kpi-sub { font-size: 9px !important; }
+    .chart-row { page-break-inside: avoid; margin-bottom: 12px !important; }
+    .chart-card { box-shadow: none !important; border: 1px solid #E2E8F0; }
+    .info-icon { display: none !important; }
+    .footer { page-break-before: avoid; border-top: 1px solid #E2E8F0; }
+  }
+
+  /* Password gate overlay */
+  #pwOverlay { position: fixed; inset: 0; background: #2C3A44; z-index: 9999; display: flex; align-items: center; justify-content: center; }
+  #pwBox { background: #fff; padding: 32px 40px; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); min-width: 320px; }
+  #pwBox h3 { margin: 0 0 6px 0; color: #435663; font-size: 18px; }
+  #pwBox p { margin: 0 0 18px 0; font-size: 13px; color: #718096; }
+  #pwInput { width: 100%; padding: 10px 12px; border: 1px solid #CBD5E0; border-radius: 6px; font-size: 14px; margin-bottom: 12px; box-sizing: border-box; }
+  #pwBtn { width: 100%; background: #C9A84C; color: #fff; border: none; padding: 10px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  #pwBtn:hover { background: #B8953F; }
+  #pwError { color: #E53E3E; font-size: 12px; margin-top: 8px; min-height: 16px; }
+</style>
+</head>
+<body>
+<div id="pwOverlay">
+  <div id="pwBox">
+    <h3>Five Peaks Properties</h3>
+    <p>Enter password to view the dashboard.</p>
+    <input type="password" id="pwInput" placeholder="Password" autocomplete="off" autofocus>
+    <button id="pwBtn">Unlock</button>
+    <div id="pwError"></div>
+  </div>
+</div>
+<script>
+(function(){
+  const HASH='26eeeda7ce963427d7fd0e6ea0a0e7cc84fdbf6806e3f6a05e7d66785c195cb4';
+  const KEY='fpp_dashboard_auth';
+  // If already unlocked in this browser, skip the gate entirely.
+  try{
+    if(localStorage.getItem(KEY)===HASH){
+      document.addEventListener('DOMContentLoaded',function(){
+        const ov=document.getElementById('pwOverlay');
+        if(ov) ov.parentNode.removeChild(ov);
+      });
+      return;
+    }
+  }catch(e){/* localStorage blocked \u2014 fall through to gate */}
+  async function sha256(s){const b=new TextEncoder().encode(s);const h=await crypto.subtle.digest('SHA-256',b);return Array.from(new Uint8Array(h)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+  async function attempt(){
+    const v=document.getElementById('pwInput').value;
+    const err=document.getElementById('pwError');
+    if(!v){err.textContent='Enter a password.';return;}
+    try{
+      const h=await sha256(v);
+      if(h===HASH){
+        try{localStorage.setItem(KEY,HASH);}catch(e){/* storage blocked */}
+        const ov=document.getElementById('pwOverlay');
+        if(ov) ov.parentNode.removeChild(ov);
+      } else {
+        err.textContent='Incorrect password.';
+        document.getElementById('pwInput').value='';
+      }
+    }catch(e){err.textContent='Unable to hash \u2014 use a modern browser.';}
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    const btn=document.getElementById('pwBtn');
+    const inp=document.getElementById('pwInput');
+    if(btn) btn.addEventListener('click',attempt);
+    if(inp) inp.addEventListener('keydown',e=>{if(e.key==='Enter')attempt();});
+  });
+})();
+</script>
+<div class="tooltip-wrap" id="tooltip"></div>
+<div class="header-bar">
+  <div><h1>Five Peaks Properties</h1><div class="subtitle">Management Accounts Dashboard</div></div>
+  <div class="header-right"><div class="period">APRIL 2026</div><div class="date">Generated 12 April 2026</div></div>
+</div>
+<div class="tab-nav">
+  <a class="tab-btn" href="260430%20-%20FPP%20Dashboard.html">Shareholder Metrics</a>
+  <a class="tab-btn" href="260430%20-%20FPP%20Management%20Accounts.html">Management Accounts</a>
+  <a class="tab-btn active" href="260430%20-%20FPP%20Compliance.html">Compliance Obligations</a>
+</div>
+<div class="content">
+  <div class="snapshot-stamp">Compliance snapshot as at APRIL 2026 month-end</div>
+  <div class="comp-summary">
+    <div class="comp-tile comp-complete"><div class="comp-count">1</div><div class="comp-label">Complete <span class="info-icon" data-tooltip="Obligation fulfilled. No further action needed unless it recurs.">i</span></div></div>
+    <div class="comp-tile comp-pending"><div class="comp-count">2</div><div class="comp-label">Pending <span class="info-icon" data-tooltip="Action required but deadline not yet passed.">i</span></div></div>
+    <div class="comp-tile comp-overdue"><div class="comp-count">1</div><div class="comp-label">Overdue <span class="info-icon" data-tooltip="Deadline passed. Immediate action required.">i</span></div></div>
+    <div class="comp-tile comp-upcoming"><div class="comp-count">4</div><div class="comp-label">Upcoming <span class="info-icon" data-tooltip="Due in the future. Plan ahead.">i</span></div></div>
+  </div>
+  <div class="card"><div class="card-header"><h2>Once-Off Actions</h2></div><div class="card-body"><table><thead><tr><th style="width:28%">Obligation</th><th style="width:12%">Authority</th><th style="width:12%">Status</th><th>Notes</th></tr></thead><tbody>
+<tr><td class="label">Register on SARS eFiling <span class="info-icon" data-tooltip="Register the company on SARS eFiling so we can submit tax returns and provisional tax payments online.">i</span></td><td><span class="auth-badge auth-sars">SARS</span></td><td><span class="status-badge st-pending">Pending</span></td><td style="font-size:12px;color:#4A5568;white-space:normal;">Tax reference number exists. eFiling access needed to file IRP6 and ITR14.</td></tr>
+<tr><td class="label">Appoint Information Officer (POPIA) <span class="info-icon" data-tooltip="South African data protection law requires every company to appoint someone responsible for personal information compliance.">i</span></td><td><span class="auth-badge auth-popia">POPIA</span></td><td><span class="status-badge st-pending">Pending</span></td><td style="font-size:12px;color:#4A5568;white-space:normal;">Register with the Information Regulator. Urgent given managing agent handles tenant personal data.</td></tr>
+<tr><td class="label">Beneficial Ownership Register (CIPC) <span class="info-icon" data-tooltip="A CIPC filing that declares who ultimately owns and controls the company. Already done.">i</span></td><td><span class="auth-badge auth-cipc">CIPC</span></td><td><span class="status-badge st-complete">Complete</span></td><td style="font-size:12px;color:#4A5568;white-space:normal;">Filed July 2025. Equal 20% shareholding across all five entities.</td></tr>
+</tbody></table></div></div>
+<div class="card"><div class="card-header"><h2>Annual Obligations</h2></div><div class="card-body"><table><thead><tr><th style="width:26%">Obligation</th><th style="width:12%">Due Date</th><th style="width:10%">Authority</th><th style="width:11%">Status</th><th>Notes</th></tr></thead><tbody>
+<tr class="overdue-row"><td class="label">1st Provisional Tax (IRP6) <span class="info-icon" data-tooltip="A prepayment of income tax due halfway through the financial year, based on estimated annual taxable income.">i</span></td><td style="color:#E53E3E;font-weight:600;">31 Dec 2025</td><td><span class="auth-badge auth-sars">SARS</span></td><td><span class="status-badge st-overdue">Overdue</span></td><td style="font-size:12px;color:#4A5568;white-space:normal;">Must file IRP6 return on eFiling before payment. Estimate taxable income for FY ending 30 Jun 2026. Late filing risks 20% underestimation penalty plus interest.</td></tr>
+<tr><td class="label">Annual Financial Statements <span class="info-icon" data-tooltip="The company's formal financial report for the year, required by the shareholders' agreement and needed to file the annual tax return.">i</span></td><td>30 Jun 2026</td><td><span class="auth-badge auth-sha">SHA &sect;15</span></td><td><span class="status-badge st-upcoming">Upcoming</span></td><td style="font-size:12px;color:#4A5568;white-space:normal;">Rotating shareholder responsible. No audit required unless majority votes for one. Required to support ITR14 filing.</td></tr>
+<tr><td class="label">2nd Provisional Tax (IRP6) <span class="info-icon" data-tooltip="A second prepayment of income tax due at year-end, based on actual results. Corrects any under- or over-estimate from the first payment.">i</span></td><td>30 Jun 2026</td><td><span class="auth-badge auth-sars">SARS</span></td><td><span class="status-badge st-upcoming">Upcoming</span></td><td style="font-size:12px;color:#4A5568;white-space:normal;">Based on actual FY figures. Tops up any underpayment from the 1st IRP6. File on eFiling before payment.</td></tr>
+<tr><td class="label">CIPC Annual Return <span class="info-icon" data-tooltip="A yearly filing with the Companies and Intellectual Property Commission to confirm the company is still active.">i</span></td><td>01 Aug 2026</td><td><span class="auth-badge auth-cipc">CIPC</span></td><td><span class="status-badge st-upcoming">Upcoming</span></td><td style="font-size:12px;color:#4A5568;white-space:normal;">Due within 30 business days of July incorporation anniversary. Fee: R100 (turnover under R500k). Late filing triggers 50% surcharge and deregistration proceedings.</td></tr>
+<tr><td class="label">Income Tax Return (ITR14) <span class="info-icon" data-tooltip="The company's annual income tax return, due 12 months after year-end. Accompanied by the financial statements.">i</span></td><td>30 Jun 2027</td><td><span class="auth-badge auth-sars">SARS</span></td><td><span class="status-badge st-upcoming">Upcoming</span></td><td style="font-size:12px;color:#4A5568;white-space:normal;">Covers FY 1 Jul 2025 - 30 Jun 2026. Due 12 months after year-end. Attach financial statements. File via SARS eFiling.</td></tr>
+</tbody></table></div></div>
+<div class="card"><div class="card-header"><h2>VAT <span class="info-icon" data-tooltip="Value Added Tax registration is only compulsory when annual turnover exceeds R1 million. FPP is well below this.">i</span></h2></div><div class="card-body"><div class="na-box"><div class="na-tag">NOT APPLICABLE</div><p>Expected rental income is under R500k per annum, well below the R1M compulsory VAT registration threshold. Voluntary registration is not recommended at this stage.</p></div></div></div>
+<div class="card"><div class="card-header"><h2>Employment Obligations <span class="info-icon" data-tooltip="Employer obligations like PAYE, UIF and skills development levies only kick in when the company hires staff directly.">i</span></h2></div><div class="card-body"><div class="na-box"><div class="na-tag">NOT APPLICABLE</div><p>FPP has no employees. The managing agent is responsible for its own staff obligations. Reassess if FPP hires directly in future.</p></div></div></div>
+<div class="card"><div class="card-header"><h2>Key Risk Flags</h2></div><div class="card-body">
+<div class="risk-card"><div class="risk-title"><span style="background:#FED7D7;color:#C53030;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;">1</span> 1st IRP6 is overdue (31 Dec 2025) <span class="info-icon" data-tooltip="The first provisional tax payment was due 31 December 2025 and has not been filed. Penalties accrue.">i</span></div><div class="risk-desc">Priority action is to set up eFiling and file the late return. SARS can levy a 20% underestimation penalty plus interest on outstanding provisional tax.</div></div>
+<div class="risk-card"><div class="risk-title"><span style="background:#FED7D7;color:#C53030;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;">2</span> Short-term rental and mortgage <span class="info-icon" data-tooltip="Some mortgage agreements prohibit short-term rentals. If FPP breaches this, the lender could call in the loan.">i</span></div><div class="risk-desc">Confirm with the bond provider that the mortgage agreement permits Airbnb-style short-term letting. Some South African lenders restrict this.</div></div>
+<div class="risk-card"><div class="risk-title"><span style="background:#FED7D7;color:#C53030;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;">3</span> Managing agent relationship <span class="info-icon" data-tooltip="If SARS reclassifies the managing agent as an employee, FPP would owe back-dated payroll taxes.">i</span></div><div class="risk-desc">Confirm the agent is not structured in a way that creates an employment relationship with FPP. If SARS deems it one, PAYE obligations apply retroactively.</div></div>
+<div class="risk-card"><div class="risk-title"><span style="background:#FED7D7;color:#C53030;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;">4</span> Shareholder loan accounts <span class="info-icon" data-tooltip="Shareholder loans earn interest at Prime + 2% per the agreement. This must be accrued monthly in the accounts.">i</span></div><div class="risk-desc">All shareholder contributions accrue interest at Prime + 2% compounded monthly (SHA cl. 9). These must be tracked monthly and constitute taxable interest income in the hands of shareholders.</div></div>
+</div></div>
+</div>
+<div class="footer">Five Peaks Properties Proprietary Limited (2025/581417/07) | Dashboard generated 30 April 2026 | This document does not constitute financial, legal, or tax advice.</div>
+<script>
+const tte=document.getElementById('tooltip');
+document.addEventListener('mouseover',e=>{if(e.target.classList.contains('info-icon')){const t=e.target.getAttribute('data-tooltip');if(t){tte.textContent=t;tte.style.display='block';const r=e.target.getBoundingClientRect();let l=r.right+10,tp=r.top-10;if(l+310>window.innerWidth)l=r.left-310;if(tp+100>window.innerHeight)tp=window.innerHeight-110;if(tp<10)tp=10;tte.style.left=l+'px';tte.style.top=tp+'px';}}});
+document.addEventListener('mouseout',e=>{if(e.target.classList.contains('info-icon'))tte.style.display='none';});
+</script>
+</body>
+</html>
