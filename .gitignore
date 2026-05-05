@@ -1,3 +1,5 @@
 .DS_Store
+.wtest
 *.tmp
-*.bak
+# Dated source files — kept locally, not pushed
+260430 - FPP *.html
